@@ -1,0 +1,200 @@
+{% extends 'main/base.html' %} {% block content %}
+
+<section class="vh-100 bg-gray ">
+  <div class="container py-5 h-100 ">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card bg-dark text-white">
+          <div class="card-body p-5">
+            <form
+              class="d-flex justify-content-center align-items-center mb-4"
+              action=""
+              method="POST"
+            >
+              {% csrf_token %}
+              <div class="form-outline flex-fill">
+                <!-- <input type="text" id="form3" class="form-control form-control-lg" /> -->
+                {{form.name}}
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg ms-2">
+                Add
+              </button>
+              <br>
+            </form>
+
+            <!-- Tabs navs -->
+            <ul class="nav nav-tabs mb-4 pb-2" id="ex1" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link link-light"
+                  id="ex1-tab-1"
+                  data-mdb-toggle="tab"
+                  href="{% url 'home' %}"
+                  role="tab"
+                  aria-controls="ex1-tabs-1"
+                  aria-selected="true"
+                  >All</a
+                >
+              </li>
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link link-light"
+                  id="ex1-tab-2"
+                  data-mdb-toggle="tab"
+                  href="{% url 'home' %}?state=False"
+                  role="tab"
+                  aria-controls="ex1-tabs-2"
+                  aria-selected="false"
+                  >Active</a
+                >
+              </li>
+              <li class="nav-item" role="presentation">
+                <a
+                  class="nav-link link-light"
+                  id="ex1-tab-3"
+                  data-mdb-toggle="tab"
+                  href="{% url 'home' %}?state=True"
+                  role="tab"
+                  aria-controls="ex1-tabs-3"
+                  aria-selected="false"
+                  >Completed</a
+                >
+              </li>
+            </ul>
+            <!-- Tabs navs -->
+
+            <!-- Tabs content -->
+            <div class="tab-content" id="ex1-content">
+              <div
+                class="tab-pane fade show active"
+                id="ex1-tabs-1"
+                role="tabpanel"
+                aria-labelledby="ex1-tab-1"
+              >
+                <ul class="list-group mb-0">
+                  {% for key, values in tasks.items %}
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white border-0 mb-2 rounded"
+                    style="background-color: #cccecf"
+                  >
+                    {{key}}
+                  </li>
+                  
+                  {% for task in values %}
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center border-0 mb-2 rounded"
+                    style="background-color: #f4f6f7"
+                  >
+                    <div class="d-flex align-items-center">
+                      {% if not task.completed %}
+                      <a
+                        href="{{ task.get_absolute_url }}"
+                        data-mdb-toggle="tooltip"
+                        title="edit task"
+                        class="btn btn-light"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22"
+                          height="22"
+                          fill="green"
+                          class="bi bi-circle-fill"
+                          viewBox="0 0 20 20"
+                        >
+                          <circle cx="8" cy="8" r="8" />
+                        </svg>
+                      </a>
+                      {{task.name}} {% else%}
+                      <a
+                        href="{{ task.get_absolute_url }}"
+                        data-mdb-toggle="tooltip"
+                        title="edit task"
+                        class="btn btn-light"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22"
+                          height="22"
+                          fill="green"
+                          class="bi bi-check-circle-fill"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+                          />
+                        </svg>
+                      </a>
+                      <s>{{task.name}}</s>
+                      {% endif %}
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <a
+                        href="{% url 'edit_task' task.id %}"
+                        data-mdb-toggle="tooltip"
+                        title="edit task"
+                        class="btn btn-light"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="blue"
+                          class="bi bi-pen"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+                          />
+                        </svg>
+                      </a>
+                      <a
+                        href="{% url 'delete_task' task.id %}"
+                        data-mdb-toggle="tooltip"
+                        title="Remove task"
+                        class="btn btn-light"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          fill="red"
+                          class="bi bi-trash"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+                          />
+                          <path
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+                          />
+                        </svg>
+                      </a>
+                    </div>
+                  </li>
+                  {% endfor %} 
+                  {% empty %}
+                  {% if state == 'True' %}
+                  <li
+                  class="list-group-item d-flex justify-content-between align-items-center text-lg border-0 mb-2 rounded"
+                  style="background-color: #f4f6f7">No completed tasks avilabele...</li>
+                  {% elif state == 'False' %}
+                  <li
+                  class="list-group-item d-flex justify-content-between align-items-center text-lg border-0 mb-2 rounded"
+                  style="background-color: #f4f6f7">No active tasks avilabele...</li>
+                  {% else %}
+                  <li
+                  class="list-group-item d-flex justify-content-between align-items-center text-lg border-0 mb-2 rounded"
+                  style="background-color: #f4f6f7">No tasks avilabele...</li>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+              </div>
+             </div>
+            <!-- Tabs content -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

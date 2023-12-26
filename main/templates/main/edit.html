@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %} {% block content %}
+<section class="vh-100 gradient-custom">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card bg-dark text-white">
+          <div class="card-body p-5">
+            <h3>Edit task:</h3>
+            <form
+              class="d-flex justify-content-center align-items-center my-4"
+              action=""
+              method="POST"
+            >
+              {% csrf_token %}
+              <div class="form-outline flex-fill">
+                <!-- <input type="text" id="form3" class="form-control form-control-lg" /> -->
+                {{form.name}}
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg ms-2">
+                edit
+              </button>
+              <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-light btn-lg ms-2">
+                Cancel
+              </a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
